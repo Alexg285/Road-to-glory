@@ -1,1 +1,0 @@
-# Predicting-World-Cup-Progression-from-Group-Stage-Performance
