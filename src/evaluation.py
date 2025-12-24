@@ -9,7 +9,7 @@ def evaluate(model, X_test, y_test, name: str, out_dir: str) -> dict:
     y_pred = model.predict(X_test)
 
     macro_f1 = f1_score(y_test, y_pred, average="macro")
-    report = classification_report(y_test, y_pred, digits=3)
+    report = classification_report(y_test, y_pred, zero_division=0)
 
     os.makedirs(out_dir, exist_ok=True)
 
