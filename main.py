@@ -11,13 +11,21 @@ from src.evaluation import evaluate
 from src.strength_features import add_pre_tournament_strength
 from src.utils import add_tournament_year
 from src.team_names import TEAM_RENAME
+from src.geo_features import add_host_features
+from src.age_features import add_team_age_features
+
 
 
 FEATURE_COLS = [
     "games", "wins", "draws", "losses", "points",
     "gf", "ga", "gd", "gf_per_game", "ga_per_game",
-    "strength_pre",
+    "strength_pre", "is_host", "avg_team_age"
 ]
+
+
+def jls_extract_def():
+    
+    return 
 
 
 def main() -> None:
@@ -81,6 +89,10 @@ def main() -> None:
         if c in df.columns:
             df = df.drop(columns=[c])
 
+    # --- Geographical features: host team ---
+    worldcups = pd.read_csv("data/raw/WorldCups.csv", sep=";", encoding="utf-8-sig")
+    df = add_host_features(df, worldcups)
+
     # --- Strength feature: FIFA fallback to Soccer ---
     print("\n[+] Loading FIFA + Soccer rankings...")
     fifa = load_fifa_rankings("data/raw/Ranking fifa 1993-2024.csv")
@@ -109,6 +121,20 @@ def main() -> None:
     # Impute remaining missing strength values (usually name mismatches)
     df["strength_pre"] = pd.to_numeric(df["strength_pre"], errors="coerce")
     df["strength_pre"] = df["strength_pre"].fillna(df["strength_pre"].median())
+
+    # --- Age feature: average team age at tournament start ---
+    print("\n[+] Adding average squad age (avg_team_age)...")
+
+    players = pd.read_csv("data/raw/players.csv", sep=",")
+    squads  = pd.read_csv("data/raw/squads.csv", sep=";")
+    matches = pd.read_csv("data/raw/matches.csv", sep=";")
+
+    df = add_team_age_features(df, players, squads, matches)
+
+    print("Missing avg_team_age:", df["avg_team_age"].isna().sum())
+
+    # Imputation simple (pour modèles)
+    df["avg_team_age"] = df["avg_team_age"].fillna(df["avg_team_age"].median())
 
     # Quick sanity checks
     missing = df[FEATURE_COLS + ["stage_label"]].isna().sum().sum()

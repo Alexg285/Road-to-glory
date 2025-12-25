@@ -1,13 +1,15 @@
 from __future__ import annotations
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 
-def train_logreg(X_train, y_train, random_state: int = 42):
-    model = LogisticRegression(
-        max_iter=5000,
-        random_state=random_state
+def train_logreg(X, y):
+    model = make_pipeline(
+        StandardScaler(),
+        LogisticRegression(max_iter=2000, class_weight="balanced")
     )
-    model.fit(X_train, y_train)
+    model.fit(X, y)
     return model
 
 def train_rf(X_train, y_train, random_state: int = 42):
