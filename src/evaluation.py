@@ -1,25 +1,37 @@
-from __future__ import annotations
-import os
 import pandas as pd
-import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score, f1_score, classification_report, confusion_matrix
+from .config import LABELS, LABEL_IDS
 
-from sklearn.metrics import f1_score, classification_report, confusion_matrix, ConfusionMatrixDisplay
 
-def evaluate(model, X_test, y_test, name: str, out_dir: str) -> dict:
+def evaluate_model(model, test_df, features, model_name):
+    X_test = test_df[features]
+    y_true = test_df["y_ord"].astype(int).values
     y_pred = model.predict(X_test)
 
-    macro_f1 = f1_score(y_test, y_pred, average="macro")
-    report = classification_report(y_test, y_pred, zero_division=0)
+    acc = accuracy_score(y_true, y_pred)
+    macro_f1 = f1_score(y_true, y_pred, average="macro")
+    weighted_f1 = f1_score(y_true, y_pred, average="weighted")
 
-    os.makedirs(out_dir, exist_ok=True)
+    print("\n" + "-" * 60)
+    print(f"{model_name}")
+    print("-" * 60)
+    print(f"Accuracy: {acc:.3f}")
+    print(f"Macro F1 : {macro_f1:.3f}\n")
+    print(classification_report(
+        y_true, y_pred,
+        labels=LABEL_IDS,
+        target_names=LABELS,
+        digits=3,
+        zero_division=0
+    ))
 
-    labels = sorted(pd.unique(y_test))
-    cm = confusion_matrix(y_test, y_pred, labels=labels)
-    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels)
-    disp.plot(values_format="d")
-    plt.title(f"{name} - Confusion Matrix")
-    plt.tight_layout()
-    plt.savefig(os.path.join(out_dir, f"confusion_{name.lower()}.png"), dpi=200)
-    plt.close()
+    cm = confusion_matrix(y_true, y_pred, labels=LABEL_IDS)
+    cm_df = pd.DataFrame(cm, index=LABELS, columns=LABELS)
 
-    return {"model": name, "macro_f1": float(macro_f1), "report": report}
+    return {
+        "name": model_name,
+        "accuracy": acc,
+        "macro_f1": macro_f1,
+        "weighted_f1": weighted_f1,
+        "confusion_df": cm_df
+    }
