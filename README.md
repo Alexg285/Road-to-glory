@@ -5,10 +5,10 @@ Can national teams’ progression in FIFA World Cups be predicted using pre-tour
 
 ## Set Up
 
-# Create environment
+### Create environment
 conda env create -f environment.yml
 conda activate worldcup-project
-## Usage
+### Usage
 python main.py
 Running the main script prints model evaluation results to the console, including:
 
@@ -22,26 +22,29 @@ Running the main script prints model evaluation results to the console, includin
 # Project Structure
 Road-to-glory/
 ├── data/
-│   ├── raw/                # Original data sources
-│   └── clean/              # Cleaned and processed dataset
+│   ├── clean/               # Cleaned and processed dataset
 │       └── final_dataset1.csv
+│   └── raw/              # Original data sources
+│       
 │
 ├── notebooks/
 │   ├── cleaning_data.ipynb
 │   └── EDA_Results_Road_to_Glory.ipynb
 │
-├── src/
-│   ├── config.py           # Feature sets and constants
-│   ├── data_loader.py      # Data loading and splitting logic
-│   ├── models.py           # Model training functions
-│   └── evaluation.py       # Evaluation utilities
-│
 ├── results/
 │   ├── metrics.csv
 │   └── plots/
 │
-├── main.py                 # End-to-end training and evaluation script
+├── src/
+│   ├── __init__.py
+│   ├── config.py           # Feature sets and constants
+│   ├── data_loader.py      # Data loading and splitting logic
+│   ├── evaluation.py       # Evaluation utilities
+│   └── models.py           # Model training functions
+│
+├── AI_USAGE.md
 ├── environment.yml
+├── main.py                 # End-to-end training and evaluation script
 └── README.md
 
 ## Results
