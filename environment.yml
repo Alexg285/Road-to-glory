@@ -131,6 +131,7 @@ dependencies:
   - xcb-util-keysyms=0.4.1=hb711507_0
   - xcb-util-renderutil=0.3.10=hb711507_0
   - xcb-util-wm=0.4.2=hb711507_0
+  - xgboost
   - xkeyboard-config=2.46=hb03c661_0
   - xorg-libice=1.1.2=hb9d3cd8_0
   - xorg-libsm=1.2.6=he73a12e_0
