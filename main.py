@@ -1,5 +1,5 @@
-import pandas as pd
 from pathlib import Path
+import pandas as pd
 from src.config import FEATURES_BASELINE, FEATURES_ENRICHED
 from src.data_loader import load_and_split
 from src.models import train_logreg, train_xgb

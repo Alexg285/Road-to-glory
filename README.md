@@ -24,12 +24,14 @@ Road-to-glory/
 ├── data/
 │   ├── clean/               # Cleaned and processed dataset
 │       └── final_dataset1.csv
-│   └── raw/              # Original data sources
-│       
+│   └── raw/              # Original data sources       
 │
 ├── notebooks/
 │   ├── cleaning_data.ipynb
 │   └── EDA_Results_Road_to_Glory.ipynb
+│
+├── Report
+│    └── project_report.pdf
 │
 ├── results/
 │   ├── metrics.csv
@@ -65,6 +67,9 @@ is consistent with correlation analysis, which shows that group-stage performanc
 
 Performance on the Winner class remains limited due to the very small number of observations in the
 test set, which is a structural limitation of the dataset.
+
+### Report
+📄 Final report: `report/project_report.pdf`
 
 ## Requirements
 - Python 3.11
