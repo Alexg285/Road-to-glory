@@ -31,7 +31,7 @@ Road-to-glory/
 │   └── EDA_Results_Road_to_Glory.ipynb
 │
 ├── Report
-│    └── project_report.pdf
+│    └── Predicting_FIFA_World_Cup_Tournament_Progression_Using_Machine_Learning-2.pdf
 │
 ├── results/
 │   ├── metrics.csv
@@ -68,8 +68,6 @@ is consistent with correlation analysis, which shows that group-stage performanc
 Performance on the Winner class remains limited due to the very small number of observations in the
 test set, which is a structural limitation of the dataset.
 
-### Report
-📄 Final report: `report/project_report.pdf`
 
 ## Requirements
 - Python 3.11
